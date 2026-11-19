@@ -1,0 +1,7 @@
+/* MUI toggles .light / .dark on <html> (colorSchemeSelector: 'class'). Non-MUI tweaks per theme go here. */
+.light {
+  --app-scrollbar-thumb: rgba(0, 0, 0, 0.25);
+}
+.dark {
+  --app-scrollbar-thumb: rgba(255, 255, 255, 0.25);
+}

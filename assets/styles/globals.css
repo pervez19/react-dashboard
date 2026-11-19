@@ -1,0 +1,25 @@
+/* CssBaseline already normalises the page; only app-wide additions here. */
+html {
+  scroll-behavior: smooth;
+}
+
+:focus-visible {
+  outline: var(--app-focus-ring);
+  outline-offset: 2px;
+}
+
+* {
+  scrollbar-color: var(--app-scrollbar-thumb) transparent;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

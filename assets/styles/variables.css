@@ -1,0 +1,6 @@
+/* Design tokens that live outside MUI's theme (MUI exposes its own as --mui-* CSS variables). */
+:root {
+  --app-content-max-width: 1280px;
+  --app-focus-ring: 2px solid var(--mui-palette-primary-main, #3f51b5);
+  --app-transition-fast: 150ms ease;
+}

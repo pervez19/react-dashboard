@@ -1,0 +1,11 @@
+node_modules
+dist
+coverage
+*.local
+.env.*.local
+
+# Local environment values (API URL, gateway key). Copy .env.example to .env.
+.env
+
+# Local editor/agent state
+.claude/
