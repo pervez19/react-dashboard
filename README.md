@@ -57,6 +57,182 @@ HttpOnly cookie set by the backend would remove it (see the `shortcut:` note in 
 ## Structure
 
 ```
+|-- public
+|   |-- favicon.ico
+|   `-- manifest.json
+|-- src
+|   |-- core
+|   |   |-- guards
+|   |   |   |-- AuthGuard.tsx
+|   |   |   |-- NoAuthGuard.tsx
+|   |   |   `-- RoleGuard.tsx
+|   |   |-- interceptors
+|   |   |   |-- authInterceptor.ts
+|   |   |   `-- errorInterceptor.ts
+|   |   |-- models
+|   |   |   |-- User.ts
+|   |   |   `-- Token.ts
+|   |   |-- enums
+|   |   |   |-- RoleEnum.ts
+|   |   |   |-- StatusEnum.ts
+|   |   |   |-- NotificationTypeEnum.ts
+|   |   |   `-- ButtonTypeEnum.ts
+|   |   |-- services
+|   |   |   |-- apiService.ts
+|   |   |   |-- authService.ts
+|   |   |   |-- validationService.ts
+|   |   |   `-- notificationService.ts
+|   |   |-- components
+|   |   |   |-- Navbar
+|   |   |   |   `-- Navbar.tsx
+|   |   |   |-- Footer
+|   |   |   |   `-- Footer.tsx
+|   |   |   |-- NotFound
+|   |   |   |   `-- NotFound.tsx
+|   |   |   |-- Skeleton
+|   |   |   |   `-- Skeleton.tsx
+|   |   |   |-- SideMenu
+|   |   |   |   `-- SideMenu.tsx
+|   |   |   |-- Notification
+|   |   |   |   `-- Notification.tsx
+|   |   |   `-- TooltipPopup
+|   |   |       `-- TooltipPopup.tsx
+|   |   |-- constants
+|   |   |   |-- apiUrls.ts
+|   |   |   |-- appConstants.ts
+|   |   |   `-- env.ts                  # the only file that reads import.meta.env
+|   |   |-- utils
+|   |   |   |-- commonUtils.ts
+|   |   |   |-- jwtUtils.ts
+|   |   |   |-- validationUtils.ts
+|   |   |   `-- roleUtils.ts
+|   |   `-- providers
+|   |       |-- AuthProvider.tsx
+|   |       |-- AppProviders.tsx
+|   |       |-- ThemeProvider.tsx
+|   |       `-- NotificationProvider.tsx
+|   |-- shared
+|   |   |-- components
+|   |   |   |-- Button
+|   |   |   |   `-- Button.tsx
+|   |   |   |-- Modal
+|   |   |   |   `-- Modal.tsx
+|   |   |   |-- Spinner
+|   |   |   |   `-- Spinner.tsx
+|   |   |   |-- EmptyState
+|   |   |   |   `-- EmptyState.tsx
+|   |   |   `-- FormField
+|   |   |       `-- FormField.tsx
+|   |   |-- hooks
+|   |   |   |-- useAuth.ts
+|   |   |   |-- useFormValidation.ts
+|   |   |   |-- useApi.ts
+|   |   |   |-- useTheme.ts
+|   |   |   `-- useNotification.ts
+|   |   `-- types
+|   |       |-- sharedTypes.ts
+|   |       |-- notificationTypes.ts
+|   |       `-- buttonTypes.ts
+|   |-- features
+|   |   |-- home
+|   |   |   |-- components
+|   |   |   |   `-- HomePage.tsx
+|   |   |   |-- services
+|   |   |   |   `-- homeService.ts
+|   |   |   `-- types
+|   |   |       `-- homeTypes.ts
+|   |   |-- auth
+|   |   |   |-- components
+|   |   |   |   |-- Login.tsx
+|   |   |   |   `-- Register.tsx
+|   |   |   `-- types
+|   |   |       `-- authTypes.ts
+|   |   |-- dashboard
+|   |   |   |-- components
+|   |   |   |   |-- DashboardPage.tsx
+|   |   |   |   `-- AdminPanel.tsx      # ADMIN / SUPER_ADMIN only (RoleGuard)
+|   |   |   |-- services
+|   |   |   |   `-- dashboardService.ts
+|   |   |   `-- types
+|   |   |       `-- dashboardTypes.ts
+|   |   `-- docs                        # in-app "Project docs" page
+|   |       |-- components
+|   |       |   `-- ProjectDocsPage.tsx
+|   |       |-- services
+|   |       |   `-- docsService.ts
+|   |       `-- types
+|   |           `-- docsTypes.ts
+|   |-- layouts
+|   |   |-- MainLayout.tsx
+|   |   |-- AuthLayout.tsx
+|   |   `-- DashboardLayout.tsx
+|   |-- store
+|   |   |-- index.ts
+|   |   `-- authStore.ts
+|   |-- tests
+|   |   |-- components
+|   |   |   |-- App.test.tsx            # integration: login, reload, guards, sign out
+|   |   |   |-- Button.test.tsx
+|   |   |   |-- HomePage.test.tsx
+|   |   |   |-- Navbar.test.tsx
+|   |   |   |-- Notification.test.tsx
+|   |   |   |-- ProjectDocsPage.test.tsx
+|   |   |   |-- SideMenu.test.tsx
+|   |   |   `-- TooltipPopup.test.tsx
+|   |   |-- guards
+|   |   |   `-- guards.test.tsx
+|   |   |-- hooks
+|   |   |   |-- useAuth.test.ts
+|   |   |   `-- useNotification.test.ts
+|   |   |-- interceptors
+|   |   |   |-- authInterceptor.test.ts
+|   |   |   `-- errorInterceptor.test.ts
+|   |   |-- mocks
+|   |   |   `-- env.ts                  # replaces core/constants/env.ts in Jest
+|   |   |-- services
+|   |   |   |-- authService.test.ts
+|   |   |   `-- notificationService.test.ts
+|   |   |-- store
+|   |   |   `-- authStore.test.ts
+|   |   `-- utils
+|   |       |-- jwtUtils.test.ts
+|   |       `-- roleUtils.test.ts
+|   |-- App.tsx
+|   |-- index.tsx
+|   |-- react-app-env.d.ts
+|   |-- routes.tsx
+|   `-- setupTests.ts                   # shared test helpers (mockApi, loginBody, ...)
+|-- assets
+|   |-- images
+|   |-- fonts
+|   |-- icons
+|   `-- styles
+|       |-- globals.css
+|       |-- variables.css
+|       |-- utilities.css
+|       `-- themes.css
+|-- .env.example                        # copy to .env (git-ignored)
+|-- .env.production
+|-- index.html                          # Vite requires it in the project root
+|-- package.json
+|-- tsconfig.json
+|-- eslint.config.js
+|-- vite.config.ts
+|-- jest.config.js
+|-- jest.setup.ts
+`-- README.md
+```
+
+Differences from the originally requested structure:
+
+- `VerifyEmail.tsx` and `authVerificationService.ts` are not included, because email verification is not required.
+- `themeTypes.ts` and `apiTypes.ts` are not under `features/auth/types`. Those types are app-wide, so they live in `shared/types/sharedTypes.ts`.
+- `index.html` is in the project root, not `public/`, because Vite requires it there.
+- Added: `core/constants/env.ts`, the `dashboard/AdminPanel.tsx` admin page, the `features/docs` page, and extra test folders (`guards`, `interceptors`, `store`, `mocks`).
+
+### Layers
+
+```
 src/core        infrastructure: guards, interceptors, services, models, enums, constants, utils, providers, app-chrome components
 src/shared      reusable UI (Button, Modal, Spinner, EmptyState, FormField), hooks, types
 src/features    home / auth / dashboard / docs: components, services, types
